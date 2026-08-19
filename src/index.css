@@ -1,0 +1,7 @@
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-width: 320px;
+}

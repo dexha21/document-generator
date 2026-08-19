@@ -1,0 +1,52 @@
+{
+  "name": "document-generator",
+  "version": "1.0.0",
+  "private": true,
+  "homepage": "https://dexha21.github.io/document-generator",
+  "dependencies": {
+    "buffer": "^6.0.3",
+    "docx": "^9.5.1",
+    "file-saver": "^2.0.5",
+    "jspdf": "^3.0.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-scripts": "^5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/__tests__/**/*.{js,jsx,ts,tsx}",
+          "**/*.{spec,test}.{js,jsx,ts,tsx}"
+        ],
+        "env": {
+          "jest": true
+        }
+      }
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 edge version"
+    ]
+  }
+}
