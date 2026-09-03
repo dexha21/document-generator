@@ -189,6 +189,13 @@ function App() {
 }
 
 function DocumentPreview({ document, values }) {
+  if (
+    document.key === 'affidavitNonMembership' ||
+    document.key === 'affidavitGoodConduct'
+  ) {
+    return <AffidavitPreview document={document} values={values} />;
+  }
+
   return (
     <div className="paper">
       <div className="paper-address-right">
@@ -232,6 +239,78 @@ function DocumentPreview({ document, values }) {
         )}
 
         <strong>{resolve(document.signature, values)}</strong>
+      </div>
+    </div>
+  );
+}
+
+function AffidavitPreview({ document, values }) {
+  const paragraphs = document.renderBody(values);
+
+  return (
+    <div className="paper affidavit-paper">
+      <div className="affidavit-header">
+        <h3 className="paper-title">
+          {document.subtitle.split('\n').map((line, index) => (
+            <div key={index}>{line}</div>
+          ))}
+        </h3>
+        <div className="affidavit-subtitle">{document.title}</div>
+      </div>
+
+      <div className="affidavit-body">
+        {paragraphs.map((paragraph, index) => {
+          if (typeof paragraph === 'string') {
+            return <p key={index}>{paragraph}</p>;
+          }
+
+          const paragraphStyle = {
+            textAlign: paragraph.align || 'justify',
+            fontWeight: paragraph.bold ? 'bold' : 'normal',
+          };
+
+          // Add signature image before DEPONENT
+          if (paragraph.text === 'DEPONENT' && values.signature) {
+            return (
+              <div
+                key={index}
+                style={{ display: 'flex', flexDirection: 'row-reverse' }}
+              >
+                <div style={{ minWidth: '150px', width: 'fit-content' }}>
+                  <div
+                    className="signature-image"
+                    style={{ textAlign: 'center', margin: '0px auto' }}
+                  >
+                    <img
+                      src={values.signature}
+                      alt="Signature"
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        objectFit: 'contain',
+                      }}
+                    />
+                  </div>
+                  <p
+                    style={{
+                      textAlign: 'center',
+                      fontWeight: 'bold',
+                      borderTop: '1px solid #000',
+                    }}
+                  >
+                    {paragraph.text}
+                  </p>
+                </div>
+              </div>
+            );
+          }
+
+          return (
+            <p key={index} style={paragraphStyle}>
+              {paragraph.text}
+            </p>
+          );
+        })}
       </div>
     </div>
   );
